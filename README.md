@@ -260,4 +260,4 @@ nothing.
 
 ## Licence
 
-Not yet chosen.
+MIT. See [LICENSE](LICENSE).
