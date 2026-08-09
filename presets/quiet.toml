@@ -1,0 +1,141 @@
+# quiet — a prompt that says nothing until something has happened.
+#
+# Everything is dimmed by default; colour is spent only on state that wants
+# attention: a failed command, a dirty worktree, root, a remote host. The
+# palette maps onto the terminal's own ANSI colours rather than fixed hex
+# values, so it inherits whatever theme is already in use.
+#
+# Two lines, because a bare input line means long commands always start in the
+# same column.
+
+format = """
+$username$hostname$directory$git_branch$git_status$nix_shell$container\
+$c$cpp$golang$nodejs$python$rust$java$haskell
+$status$character"""
+
+right_format = "$cmd_duration$time"
+
+add_newline = true
+palette = "quiet"
+
+[palettes.quiet]
+# An explicit mid grey rather than bright-black, whose actual
+# lightness is whatever the terminal theme decided and is often
+# close to the background.
+muted = "245"
+text = "252"
+accent = "cyan"
+ok = "green"
+warn = "yellow"
+danger = "red"
+
+# Only appears as root or over ssh, and then it is a warning, not decoration.
+[username]
+show_always = false
+style_user = "warn"
+style_root = "bold danger"
+format = "[$user]($style)[@](muted)"
+
+[hostname]
+ssh_only = true
+style = "warn"
+format = "[$hostname]($style) "
+
+[directory]
+style = "text"
+format = "[$path]($style)[$read_only]($read_only_style) "
+truncation_length = 3
+truncation_symbol = "\u2026/"
+read_only = " \u25cf"
+read_only_style = "danger"
+
+[git_branch]
+symbol = ""
+style = "muted"
+format = "[on ](muted)[$branch](accent) "
+
+# Dirty state is the one thing worth colouring in a repository.
+[git_status]
+style = "warn"
+format = "([$all_status$ahead_behind]($style) )"
+conflicted = "~"
+ahead = "\u2191${count}"
+behind = "\u2193${count}"
+diverged = "\u2195"
+untracked = "?${count}"
+stashed = "*"
+modified = "!${count}"
+staged = "+${count}"
+renamed = "\u00bb${count}"
+deleted = "-${count}"
+
+[nix_shell]
+style = "muted"
+format = "[nix:$state]($style) "
+
+[container]
+style = "muted"
+format = "[$name]($style) "
+
+[cmd_duration]
+min_time = 2000
+style = "muted"
+format = "[$duration]($style) "
+
+[time]
+disabled = false
+time_format = "%H:%M"
+style = "muted"
+format = "[$time]($style)"
+
+# The exit code only shows up when there is one worth reading.
+[status]
+disabled = false
+style = "danger"
+format = "[$status]($style) "
+
+[character]
+success_symbol = "[\u276f](ok)"
+error_symbol = "[\u276f](danger)"
+vimcmd_symbol = "[\u276e](accent)"
+format = "$symbol "
+
+[c]
+style = "muted"
+format = "[$symbol$version]($style) "
+symbol = "c "
+
+[cpp]
+style = "muted"
+format = "[$symbol$version]($style) "
+symbol = "c++ "
+
+[golang]
+style = "muted"
+format = "[$symbol$version]($style) "
+symbol = "go "
+
+[nodejs]
+style = "muted"
+format = "[$symbol$version]($style) "
+symbol = "node "
+
+[python]
+style = "muted"
+format = "[$symbol$version]($style) "
+symbol = "py "
+
+[rust]
+style = "muted"
+format = "[$symbol$version]($style) "
+symbol = "rs "
+
+[java]
+style = "muted"
+format = "[$symbol$version]($style) "
+symbol = "java "
+
+[haskell]
+style = "muted"
+format = "[$symbol$version]($style) "
+symbol = "hs "

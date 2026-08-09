@@ -1,0 +1,50 @@
+
+# Context on the left, git and clock pushed to the right edge by $fill.
+format = """
+$username$hostname$directory$fill$git_branch$git_status$cmd_duration$time
+$character"""
+
+[fill]
+symbol = " "
+
+[username]
+show_always = true
+style_user = "bold yellow"
+style_root = "bold red"
+format = "[$user]($style)@"
+
+[hostname]
+ssh_only = false
+style = "bold green"
+format = "[$hostname]($style) "
+
+[directory]
+style = "bold blue"
+format = "[$path]($style)[$read_only]($read_only_style)"
+truncation_length = 4
+truncation_symbol = "\u2026/"
+
+[git_branch]
+symbol = "\ue0a0 "
+style = "bold purple"
+format = "[$symbol$branch]($style) "
+
+[git_status]
+style = "bold red"
+format = "([$all_status$ahead_behind]($style) )"
+
+[cmd_duration]
+min_time = 500
+style = "dimmed yellow"
+format = "[took $duration]($style) "
+
+[time]
+disabled = false
+time_format = "%R"
+style = "dimmed white"
+format = "[$time]($style)"
+
+[character]
+success_symbol = "[\u276f](bold green)"
+error_symbol = "[\u276f](bold red)"
+vicmd_symbol = "[\u276e](bold green)"

@@ -1,0 +1,45 @@
+
+# Port of the oh-my-zsh agnoster theme: the original powerline prompt.
+
+add_newline = false
+
+format = """
+[](bg:black)$username $hostname\
+[\ue0b0](fg:black bg:blue)\
+$directory\
+[\ue0b0](fg:blue bg:green)\
+$git_branch$git_status\
+[\ue0b0](fg:green) \
+   """
+
+[username]
+show_always = false
+style_user = "bold white bg:black"
+style_root = "bold red bg:black"
+format = "[$user]($style)"
+
+[hostname]
+ssh_only = true
+style = "bold white bg:black"
+format = "[@$hostname]($style)"
+
+[directory]
+style = "bold black bg:blue"
+format = "[ $path ]($style)"
+truncation_length = 3
+truncation_symbol = "\u2026/"
+
+[git_branch]
+symbol = "\ue0a0 "
+style = "bold black bg:green"
+format = "[ $symbol$branch]($style)"
+
+[git_status]
+style = "bold black bg:green"
+format = "[ $all_status$ahead_behind]($style)[ ]($style)"
+
+[character]
+success_symbol = "[ \u276f](bold green)"
+error_symbol = "[ \u276f](bold red)"
+vicmd_symbol = "[ \u276e](bold green)"
+format = "$symbol "

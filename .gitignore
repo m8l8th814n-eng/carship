@@ -1,0 +1,26 @@
+# Build output
+build/
+*.o
+*.d
+*.a
+
+# Generated from presets/ and shell/ by tools/embed.sh
+assets.c
+assets.h
+
+# Editor and tooling
+compile_commands.json
+.cache/
+.ccls-cache/
+*.swp
+*~
+
+# Configuration backups written by `carship preset set`
+*.bak
+
+# Crash artefacts
+core
+core.*
+vgcore.*
+perf.data
+perf.data.old

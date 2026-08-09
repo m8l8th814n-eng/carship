@@ -1,0 +1,51 @@
+
+# Port of the oh-my-zsh trapd00r theme. Needs a 256-colour terminal.
+# The git line appears only inside a repository: the ( ) group around it
+# disappears together with its newline when both modules are empty.
+
+format = """($git_branch$git_status
+)$username$hostname$tty[->](fg:240)$directory$status
+$character"""
+
+add_newline = false
+
+[username]
+show_always = true
+style_user = "fg:245"
+style_root = "fg:197 bold"
+format = "[$user](fg:245)[@](fg:197)"
+
+[hostname]
+ssh_only = false
+style = "fg:250"
+format = "[$hostname]($style)"
+
+[directory]
+style = "fg:65"
+format = "[ $path]($style)"
+path_separator = " \u00bb "
+truncate_to_repo = false
+truncation_length = 0
+home_symbol = "~"
+
+[tty]
+disabled = false
+format = "[:](fg:245)[$tty](fg:242)"
+
+[status]
+disabled = false
+success_symbol_enabled = true
+format = " [\\(](fg:white)[$status](fg:225)[\\)](fg:white)"
+
+[git_branch]
+symbol = ""
+format = "[git](fg:244)[\u2768 ](fg:242)[$branch](bold fg:208)[ \u2769](fg:242) "
+
+[git_status]
+format = "[DIRTY](bold fg:blue bg:red)"
+
+[character]
+success_symbol = "[>](bold)"
+error_symbol = "[>](bold fg:196)"
+vicmd_symbol = "[<](bold fg:196)"
+format = "$symbol "

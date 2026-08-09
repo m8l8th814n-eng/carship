@@ -1,0 +1,43 @@
+
+# Port of the oh-my-zsh ys theme: a wide single line, then a bare prompt.
+
+format = """
+[#](bold yellow) $username[@](bold cyan)$hostname$directory$git_branch$git_status$time
+$character"""
+
+[username]
+show_always = true
+style_user = "bold cyan"
+style_root = "bold red"
+format = "[$user]($style)"
+
+[hostname]
+ssh_only = false
+style = "bold green"
+format = "[$hostname]($style) "
+
+[directory]
+style = "bold yellow"
+format = "[$path]($style) "
+truncate_to_repo = false
+truncation_length = 0
+
+[git_branch]
+symbol = ""
+style = "white"
+format = "on [$symbol$branch]($style)"
+
+[git_status]
+style = "bold yellow"
+format = " [\u2718]($style)"
+
+[time]
+disabled = false
+style = "white"
+time_format = "%H:%M:%S"
+format = " [$time]($style)"
+
+[character]
+success_symbol = "[$](bold white)"
+error_symbol = "[$](bold red)"
+format = "$symbol "

@@ -1,0 +1,78 @@
+
+# Shows which toolchain a project uses without paying for a version lookup.
+# Every language module skips its --version subprocess entirely.
+
+[bun]
+show_version = false
+format = 'via [$symbol]($style)'
+
+[c]
+show_version = false
+format = 'via [$symbol]($style)'
+
+[cpp]
+show_version = false
+format = 'via [$symbol]($style)'
+
+[elixir]
+show_version = false
+format = 'via [$symbol]($style)'
+
+[elm]
+show_version = false
+format = 'via [$symbol]($style)'
+
+[golang]
+show_version = false
+format = 'via [$symbol]($style)'
+
+[gradle]
+show_version = false
+format = 'via [$symbol]($style)'
+
+[haskell]
+show_version = false
+format = 'via [$symbol]($style)'
+
+[java]
+show_version = false
+format = 'via [$symbol]($style)'
+
+[julia]
+show_version = false
+format = 'via [$symbol]($style)'
+
+[kotlin]
+show_version = false
+format = 'via [$symbol]($style)'
+
+[maven]
+show_version = false
+format = 'via [$symbol]($style)'
+
+[nim]
+show_version = false
+format = 'via [$symbol]($style)'
+
+[nodejs]
+show_version = false
+format = 'via [$symbol]($style)'
+
+[php]
+show_version = false
+format = 'via [$symbol]($style)'
+
+[python]
+show_version = false
+format = 'via [$symbol]($style)'
+
+[rust]
+show_version = false
+format = 'via [$symbol]($style)'
+
+[scala]
+show_version = false
+format = 'via [$symbol]($style)'
+
+[conda]
+format = '[$symbol$environment]($style) '

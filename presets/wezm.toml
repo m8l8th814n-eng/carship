@@ -1,0 +1,31 @@
+
+# Port of the oh-my-zsh wezm theme: a terse left prompt with the path on the
+# right. right_format needs zsh; other shells simply ignore it.
+
+add_newline = false
+
+format = "($git_branch$git_status )$status$character"
+right_format = "$directory"
+
+[git_branch]
+symbol = ""
+format = "[\\($branch\\)](blue)"
+
+[git_status]
+format = "[\u26a1](red)"
+
+[status]
+disabled = false
+format = "[\\[$status\\]](bold white) "
+
+[directory]
+style = "green"
+format = "[$path]($style)"
+truncate_to_repo = false
+truncation_length = 0
+
+[character]
+success_symbol = "[%](yellow)"
+error_symbol = "[%](yellow)"
+vicmd_symbol = "[%](yellow)"
+format = "$symbol "
