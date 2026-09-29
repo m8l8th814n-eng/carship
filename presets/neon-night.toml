@@ -1,0 +1,68 @@
+# Bright cyan and magenta on a deep midnight background.
+format = """
+[](pink)\
+$os$username[](fg:pink bg:purple)\
+$directory[](fg:purple bg:blue)\
+$git_branch$git_status[](fg:blue bg:teal)\
+$nodejs$rust$golang$python[](fg:teal bg:night)\
+$cmd_duration$time[](fg:night)\
+$line_break$character"""
+
+palette = "neon"
+
+[palettes.neon]
+pink = "#ff5fd7"
+purple = "#bd5bff"
+blue = "#5f87ff"
+teal = "#00d7d7"
+night = "#202038"
+white = "#f8f8ff"
+
+[os]
+disabled = false
+style = "bg:pink fg:night"
+format = "[ $symbol ]($style)"
+
+[username]
+show_always = true
+style_user = "bg:pink fg:night"
+style_root = "bg:pink fg:night"
+format = "[ $user ]($style)"
+
+[directory]
+style = "bg:purple fg:white"
+format = "[  $path ]($style)"
+truncation_length = 3
+truncation_symbol = "…/"
+
+[git_branch]
+symbol = ""
+format = "[[ $symbol $branch ](fg:white bg:blue)](bg:blue)"
+
+[git_status]
+format = "[[ $all_status$ahead_behind ](fg:white bg:blue)](bg:blue)"
+
+[nodejs]
+symbol = ""
+format = "[[ $symbol $version ](fg:night bg:teal)](bg:teal)"
+
+[rust]
+symbol = ""
+format = "[[ $symbol $version ](fg:night bg:teal)](bg:teal)"
+
+[golang]
+symbol = ""
+format = "[[ $symbol $version ](fg:night bg:teal)](bg:teal)"
+
+[python]
+symbol = ""
+format = "[[ $symbol $version ](fg:night bg:teal)](bg:teal)"
+
+[time]
+disabled = false
+time_format = "%R"
+format = "[[  $time ](fg:white bg:night)](bg:night)"
+
+[character]
+success_symbol = "[❯](bold fg:teal)"
+error_symbol = "[❯](bold fg:pink)"

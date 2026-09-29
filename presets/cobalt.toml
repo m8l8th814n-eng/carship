@@ -1,0 +1,55 @@
+# Clean electric blues with a bright cyan working directory.
+format = """
+[](sky)\
+$os[](fg:sky bg:cobalt)\
+$directory[](fg:cobalt bg:blue)\
+$git_branch$git_status[](fg:blue bg:navy)\
+$docker_context$kubernetes[](fg:navy bg:slate)\
+$time[](fg:slate)\
+$line_break$character"""
+
+palette = "cobalt"
+
+[palettes.cobalt]
+sky = "#67e8f9"
+cobalt = "#3b82f6"
+blue = "#2563eb"
+navy = "#172554"
+slate = "#1e293b"
+ink = "#0b1220"
+white = "#effaff"
+
+[os]
+disabled = false
+style = "bg:sky fg:ink"
+format = "[ $symbol ]($style)"
+
+[directory]
+style = "bg:cobalt fg:white"
+format = "[  $path ]($style)"
+truncation_length = 3
+truncation_symbol = "…/"
+
+[git_branch]
+symbol = ""
+format = "[[ $symbol $branch ](fg:white bg:blue)](bg:blue)"
+
+[git_status]
+format = "[[ $all_status$ahead_behind ](fg:white bg:blue)](bg:blue)"
+
+[docker_context]
+symbol = ""
+format = "[[ $symbol $context ](fg:white bg:navy)](bg:navy)"
+
+[kubernetes]
+symbol = "󱃾"
+format = "[[ $symbol $context ](fg:white bg:navy)](bg:navy)"
+
+[time]
+disabled = false
+time_format = "%R"
+format = "[[  $time ](fg:white bg:slate)](bg:slate)"
+
+[character]
+success_symbol = "[❯](bold fg:sky)"
+error_symbol = "[❯](bold fg:#fb7185)"

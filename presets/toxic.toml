@@ -1,0 +1,55 @@
+# Terminal green and lime, inspired by phosphor CRT displays.
+format = """
+[](lime)\
+$os$username[](fg:lime bg:green)\
+$directory[](fg:green bg:olive)\
+$git_branch$git_status[](fg:olive bg:dark)\
+$cmd_duration$time[](fg:dark)\
+$line_break$character"""
+
+palette = "toxic"
+
+[palettes.toxic]
+lime = "#c6ff00"
+green = "#39ff14"
+olive = "#8bc34a"
+dark = "#18351f"
+ink = "#0b1a10"
+white = "#eaffea"
+
+[os]
+disabled = false
+style = "bg:lime fg:ink"
+format = "[ $symbol ]($style)"
+
+[username]
+show_always = true
+style_user = "bg:lime fg:ink"
+style_root = "bg:lime fg:ink"
+format = "[  $user ]($style)"
+
+[directory]
+style = "bg:green fg:ink"
+format = "[  $path ]($style)"
+truncation_length = 3
+truncation_symbol = "…/"
+
+[git_branch]
+symbol = ""
+format = "[[ $symbol $branch ](fg:white bg:olive)](bg:olive)"
+
+[git_status]
+format = "[[ $all_status$ahead_behind ](fg:white bg:olive)](bg:olive)"
+
+[cmd_duration]
+min_time = 2_000
+format = "[  $duration ](fg:white bg:dark)"
+
+[time]
+disabled = false
+time_format = "%R"
+format = "[[  $time ](fg:white bg:dark)](bg:dark)"
+
+[character]
+success_symbol = "[❯](bold fg:lime)"
+error_symbol = "[❯](bold fg:#ff5252)"

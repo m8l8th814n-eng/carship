@@ -1,0 +1,65 @@
+# Soft cherry blossom pink with plum and warm ivory.
+format = """
+[](pink)\
+$os$username[](fg:pink bg:plum)\
+$directory[](fg:plum bg:rose)\
+$git_branch$git_status[](fg:rose bg:dark)\
+$nodejs$python$rust[](fg:dark bg:deep)\
+$time[](fg:deep)\
+$line_break$character"""
+
+palette = "sakura"
+
+[palettes.sakura]
+pink = "#ffc4dd"
+plum = "#b5658f"
+rose = "#f28db2"
+dark = "#493044"
+deep = "#342638"
+ivory = "#fff4e8"
+ink = "#302333"
+
+[os]
+disabled = false
+style = "bg:pink fg:ink"
+format = "[ $symbol ]($style)"
+
+[username]
+show_always = true
+style_user = "bg:pink fg:ink"
+style_root = "bg:pink fg:ink"
+format = "[  $user ]($style)"
+
+[directory]
+style = "bg:plum fg:ivory"
+format = "[  $path ]($style)"
+truncation_length = 3
+truncation_symbol = "…/"
+
+[git_branch]
+symbol = ""
+format = "[[ $symbol $branch ](fg:ink bg:rose)](bg:rose)"
+
+[git_status]
+format = "[[ $all_status$ahead_behind ](fg:ink bg:rose)](bg:rose)"
+
+[nodejs]
+symbol = ""
+format = "[[ $symbol $version ](fg:ivory bg:dark)](bg:dark)"
+
+[python]
+symbol = ""
+format = "[[ $symbol $version ](fg:ivory bg:dark)](bg:dark)"
+
+[rust]
+symbol = ""
+format = "[[ $symbol $version ](fg:ivory bg:dark)](bg:dark)"
+
+[time]
+disabled = false
+time_format = "%H:%M"
+format = "[[  $time ](fg:ivory bg:deep)](bg:deep)"
+
+[character]
+success_symbol = "[❯](bold fg:plum)"
+error_symbol = "[❯](bold fg:#e64980)"

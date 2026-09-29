@@ -1,0 +1,55 @@
+# Warm amber, red and charcoal for a fireside look.
+format = """
+[](red)\
+$os$username[](fg:red bg:amber)\
+$directory[](fg:amber bg:rust)\
+$git_branch$git_status[](fg:rust bg:charcoal)\
+$cmd_duration$time[](fg:charcoal)\
+$line_break$character"""
+
+palette = "ember"
+
+[palettes.ember]
+red = "#ff5c57"
+amber = "#ffbd2e"
+rust = "#e87532"
+charcoal = "#352824"
+cream = "#fff0d5"
+ink = "#281b19"
+
+[os]
+disabled = false
+style = "bg:red fg:ink"
+format = "[ $symbol ]($style)"
+
+[username]
+show_always = true
+style_user = "bg:red fg:ink"
+style_root = "bg:red fg:ink"
+format = "[  $user ]($style)"
+
+[directory]
+style = "bg:amber fg:ink"
+format = "[  $path ]($style)"
+truncation_length = 3
+truncation_symbol = "…/"
+
+[git_branch]
+symbol = ""
+format = "[[ $symbol $branch ](fg:cream bg:rust)](bg:rust)"
+
+[git_status]
+format = "[[ $all_status$ahead_behind ](fg:cream bg:rust)](bg:rust)"
+
+[cmd_duration]
+min_time = 2_000
+format = "[  $duration ](fg:cream bg:charcoal)"
+
+[time]
+disabled = false
+time_format = "%H:%M"
+format = "[[  $time ](fg:cream bg:charcoal)](bg:charcoal)"
+
+[character]
+success_symbol = "[❯](bold fg:amber)"
+error_symbol = "[❯](bold fg:red)"

@@ -1,0 +1,62 @@
+# Acid yellow and electric blue with a sharp two-line prompt.
+format = """
+[](acid)\
+$os$username[](fg:acid bg:blue)\
+$directory[](fg:blue bg:violet)\
+$git_branch$git_status[](fg:violet bg:dark)\
+$nodejs$rust$golang$python[](fg:dark)\
+$line_break$character"""
+
+palette = "cyberpunk"
+
+[palettes.cyberpunk]
+acid = "#eaff00"
+blue = "#00c8ff"
+violet = "#bd00ff"
+dark = "#222034"
+ink = "#15141f"
+white = "#f8f7ff"
+
+[os]
+disabled = false
+style = "bg:acid fg:ink"
+format = "[ $symbol ]($style)"
+
+[username]
+show_always = true
+style_user = "bg:acid fg:ink"
+style_root = "bg:acid fg:ink"
+format = "[  $user ]($style)"
+
+[directory]
+style = "bg:blue fg:ink"
+format = "[  $path ]($style)"
+truncation_length = 3
+truncation_symbol = "…/"
+
+[git_branch]
+symbol = ""
+format = "[[ $symbol $branch ](fg:white bg:violet)](bg:violet)"
+
+[git_status]
+format = "[[ $all_status$ahead_behind ](fg:white bg:violet)](bg:violet)"
+
+[nodejs]
+symbol = ""
+format = "[[ $symbol $version ](fg:white bg:dark)](bg:dark)"
+
+[rust]
+symbol = ""
+format = "[[ $symbol $version ](fg:white bg:dark)](bg:dark)"
+
+[golang]
+symbol = ""
+format = "[[ $symbol $version ](fg:white bg:dark)](bg:dark)"
+
+[python]
+symbol = ""
+format = "[[ $symbol $version ](fg:white bg:dark)](bg:dark)"
+
+[character]
+success_symbol = "[❯](bold fg:acid)"
+error_symbol = "[❯](bold fg:violet)"
