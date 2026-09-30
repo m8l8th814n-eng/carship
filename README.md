@@ -68,10 +68,10 @@ contents to `<config>.bak` first.
 
 | | |
 | --- | --- |
-| **Powerline themes** | `catppuccin-powerline`, `nord`, `dracula`, `rose-pine`, `everforest`, `kanagawa`, `gruvbox`, `tokyo`, `pastel`, `jetpack`, `k3ff_powahline`, `powahlinje`, `kl0ck0` |
-| **oh-my-zsh ports** | `trapd00r`, `agnoster`, `robbyrussell`, `bira`, `ys`, `wezm` |
-| **Restrained** | `quiet`, `minimal`, `two-line`, `pure`, `plain`, `nonerd`, `bracketed-segments`, `nerdfontsymbols`, `no-runtime-versions` |
-| **Moving** | `animated` |
+| **Powerline themes** | `catppuccin-powerline`, `nord`, `dracula`, `rose-pine`, `everforest`, `kanagawa`, `gruvbox`, `tokyo`, `pastel`, `jetpack`, `k3ff_powahline`, `powahlinje`, `kl0ck0`, + added |
+| **oh-my-zsh ports** | `trapd00r`, `agnoster`, `robbyrussell`, `bira`, `ys`, `wezm` ++ |
+| **Restrained** | `quiet`, `minimal`, `two-line`, `pure`, `plain`, `nonerd`, `bracketed-segments`, `nerdfontsymbols`, `no-runtime-versions` + added |
+| **Moving** | `animated`(just a starting point) |
 
 ## Configure
 
@@ -283,3 +283,5 @@ MIT. See [LICENSE](LICENSE).
 ![](./9.png)
 
 ![](./10.png)
+
+Inspired by starship.rs
