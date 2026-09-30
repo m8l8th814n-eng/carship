@@ -1,16 +1,15 @@
-# carship
+### carship
 
 A cross-shell prompt written in C. Works with bash, zsh and busybox ash.
 
-Renders in about a millisecond, links only against libc, and reads
-starship-compatible TOML configuration.
+Renders in about a millisecond, reads starship-compatible TOML configuration.
 
 ```
- 󰣇  simon   ~/carship    main !2 +1    14:32   
+ 󰣇  smn   ~/carship    main !2 +1    14:32   
 ❯ 
 ```
 
-## Build
+### Build
 
 ```sh
 make              # build/carship
@@ -21,7 +20,7 @@ make install      # PREFIX=/usr/local
 
 Requires clang and a POSIX system. No external libraries.
 
-## Use
+### Use
 
 One line gives you the prompt, key bindings and shell completions. Add to
 `~/.zshrc`:
@@ -54,7 +53,7 @@ Do not paste the output of `carship init` into your rc file. It is generated
 for the binary that produced it, and a stale copy is how you end up with
 `command not found: compdef` on a line of your own `.zshrc`.
 
-## Presets
+### Presets
 
 ```sh
 carship preset --list                     # what is available
@@ -73,7 +72,7 @@ contents to `<config>.bak` first.
 | **Restrained** | `quiet`, `minimal`, `two-line`, `pure`, `plain`, `nonerd`, `bracketed-segments`, `nerdfontsymbols`, `no-runtime-versions` + added |
 | **Moving** | `animated`(just a starting point) |
 
-## Configure
+### Configure
 
 Configuration lives in `~/.config/carship.toml`, overridable with
 `$CARSHIP_CONFIG`. The format follows starship's schema: a top-level `format`
@@ -154,7 +153,7 @@ toolchain also take `symbol`, `version_format` and `show_version`.
 `haskell`, `java`, `julia`, `kotlin`, `maven`, `nim`, `nodejs`, `php`,
 `python`, `rust`, `scala`, `conda`, `pixi`, `docker_context`
 
-### Animation
+#### Animation
 
 The `animation` module derives its frame from the wall clock, so every render
 lands on the same frame without any shared state. Glyphs and colours cycle
@@ -177,7 +176,7 @@ carship installs the `TRAPALRM` handler before setting `TMOUT`, because a
 no arguments first, which is false unless the line editor is waiting for input,
 so redraws stay clear of running commands. A half-typed line survives them.
 
-## Commands
+##### Commands
 
 | Command | Purpose |
 | --- | --- |
@@ -191,7 +190,7 @@ so redraws stay clear of running commands. A half-typed line survives them.
 | `carship print-config` | print the active configuration |
 | `carship time` | milliseconds since the epoch, used by the init scripts |
 
-## Performance
+#### Performance
 
 A prompt lives about a millisecond, so its cost sits in process startup rather
 than anywhere the optimiser can reach. Measured over 500 renders with the
@@ -216,7 +215,7 @@ git, the working directory is listed once and shared between every toolchain
 module, and a version command only runs after a cheap filesystem check has
 already matched.
 
-## Safety
+#### Safety
 
 Version lookups are triggered by whatever files happen to be in the directory,
 so they run with relative `PATH` elements removed. A `PATH` containing `.`, an
@@ -233,7 +232,7 @@ information on screen that ends up in screenshots and scrollback. `env_var`
 prints whatever variable you point it at; `sudo` runs `sudo -n true` on every
 prompt and leaves entries in the auth log.
 
-## Development
+#### Development
 
 ```
 src/            core: TOML parser, format and style engines, module framework
@@ -258,11 +257,11 @@ generated into presets by a script. Written literally they are liable to be
 lost in transit, and the failure is silent: an empty text group renders
 nothing.
 
-## Licence
+#### Licence
 
 MIT. See [LICENSE](LICENSE).
 
-## Screenshots
+##### Screenshots
 
 ![](./1.png)
 
@@ -284,4 +283,5 @@ MIT. See [LICENSE](LICENSE).
 
 ![](./10.png)
 
-Inspired by starship.rs
+### Inspired by 
+#### starship.rs
