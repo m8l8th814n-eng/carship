@@ -295,6 +295,10 @@ MIT. See [LICENSE](LICENSE).
 
 ![cobalt](./screenshots/cobalt.png)
 
+`cute`
+
+![cute](./screenshots/cute.png)
+
 `cyberpunk`
 
 ![cyberpunk](./screenshots/cyberpunk.png)
