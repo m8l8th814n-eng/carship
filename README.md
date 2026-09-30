@@ -20,6 +20,19 @@ make install      # PREFIX=/usr/local
 
 Requires clang and a POSIX system. No external libraries.
 
+`make static` links with ThinLTO against a static libc, so it also needs `lld`
+and `libc.a` (`libc6-dev` on Debian, `glibc-static` on Fedora). On aarch64, or
+whenever the build fails on `-march=native` or at the link step, use:
+
+```sh
+make static ARCH= CC="clang -fuse-ld=lld"
+```
+
+`ARCH=` drops `-march=native`, which older clang rejects on ARM and which ties
+the binary to the CPU it was built on. Put `-fuse-ld=lld` in `CC` rather than
+`LDFLAGS`: an `LDFLAGS` on the command line replaces the `-static` the target
+adds, and the build quietly comes out dynamic.
+
 ### Use
 
 One line gives you the prompt, key bindings and shell completions. Add to
