@@ -154,16 +154,14 @@ static bool probe_sudo(module_state *st)
 	return true;
 }
 
-static bool probe_localip(module_state *st)
+/* The first IPv4 address on an interface that is up and not loopback. */
+static bool first_ipv4(char *out, size_t outlen)
 {
-	if (toml_bool_at(st->cfg, "ssh_only", true) && !over_ssh())
-		return false;
-
 	struct ifaddrs *addrs = NULL;
 	if (getifaddrs(&addrs) != 0)
 		return false;
 
-	char found[INET_ADDRSTRLEN] = {0};
+	out[0] = '\0';
 	for (const struct ifaddrs *ifa = addrs; ifa; ifa = ifa->ifa_next) {
 		if (!ifa->ifa_addr || ifa->ifa_addr->sa_family != AF_INET)
 			continue;
@@ -173,15 +171,35 @@ static bool probe_localip(module_state *st)
 			continue;
 
 		const struct sockaddr_in *sin = (const struct sockaddr_in *)(void *)ifa->ifa_addr;
-		if (inet_ntop(AF_INET, &sin->sin_addr, found, sizeof found))
+		if (inet_ntop(AF_INET, &sin->sin_addr, out, (socklen_t)outlen))
 			break;
 	}
 	freeifaddrs(addrs);
+	return out[0] != '\0';
+}
 
-	if (!found[0])
+static bool probe_localip(module_state *st)
+{
+	if (toml_bool_at(st->cfg, "ssh_only", true) && !over_ssh())
+		return false;
+
+	char found[INET_ADDRSTRLEN];
+	if (!first_ipv4(found, sizeof found))
 		return false;
 
 	var_addz(&st->vars, "localipv4", found);
+	return true;
+}
+
+/* A short localip for use in a segment: shown everywhere, not just over ssh. */
+static bool probe_ip(module_state *st)
+{
+	char found[INET_ADDRSTRLEN];
+	if (!first_ipv4(found, sizeof found))
+		return false;
+
+	var_addz(&st->vars, "symbol", toml_str_at(st->cfg, "symbol", "\U000f0a60"));
+	var_addz(&st->vars, "ip", found);
 	return true;
 }
 
@@ -242,6 +260,7 @@ const module_def env_modules[] = {
 	 .probe = probe_sudo},
 	{.name = "localip", .format = "[$localipv4]($style) ", .style = "yellow bold",
 	 .disabled = true, .probe = probe_localip},
+	{.name = "ip", .format = "[$symbol $ip]($style) ", .style = "yellow", .probe = probe_ip},
 	{.name = "tty", .format = "[$symbol$tty]($style) ", .style = "dimmed white",
 	 .disabled = true, .probe = probe_tty},
 	{.name = "fill", .format = "$symbol", .style = "black bold", .probe = probe_fill},

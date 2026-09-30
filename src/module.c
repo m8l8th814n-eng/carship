@@ -66,6 +66,8 @@ extern const module_def env_modules[];
 extern const size_t env_modules_count;
 extern const module_def animation_modules[];
 extern const size_t animation_modules_count;
+extern const module_def system_modules[];
+extern const size_t system_modules_count;
 
 const module_def *module_lookup(const char *name)
 {
@@ -79,6 +81,7 @@ const module_def *module_lookup(const char *name)
 		{lang_modules, &lang_modules_count},
 		{env_modules, &env_modules_count},
 		{animation_modules, &animation_modules_count},
+		{system_modules, &system_modules_count},
 	};
 
 	for (size_t r = 0; r < sizeof registries / sizeof *registries; r++)
@@ -210,13 +213,14 @@ bool module_render_ex(const char *name, context *ctx, const toml_value *root,
 }
 
 const char *const carship_module_order[] = {
-	"os",        "username",   "hostname",  "localip",    "shlvl",
+	"os",        "username",   "hostname",  "localip",    "ip",         "shlvl",
 	"container", "nix_shell",  "directory", "git_branch", "git_state",  "git_status",
 	"git_metrics", "bun",      "c",         "cpp",        "elixir",     "elm",
 	"golang",    "gradle",     "haskell",   "java",       "julia",      "kotlin",
 	"maven",     "nim",        "nodejs",    "php",        "python",     "rust",
 	"scala",     "conda",      "pixi",      "docker_context", "env_var", "sudo",
-	"jobs",      "cmd_duration", "status",  "time",       "shell",      "tty",
+	"jobs",      "cmd_duration", "status",  "time",       "uptime",     "shell",
+	"tty",       "tailscale",  "bluetooth",
 	"animation",
 	"fill",
 	"line_break",
