@@ -1,0 +1,60 @@
+# /home/simon/.config/carship.toml
+# Sunset gradients with a retro terminal feel.
+format = """
+[](orange)\
+$os[](fg:orange bg:yellow)\
+$directory[](fg:yellow bg:magenta)\
+$git_branch$git_status[](fg:magenta bg:violet)\
+[](fg:violet bg:dark)\
+[](fg:dark) \
+$character""" 
+
+palette = "synthwave"
+
+[palettes.synthwave]
+ink = "#ff7043"
+dark = "#ff0032"
+magenta = "#ff4fa3"
+yellow = "#9b5de5"
+violet = "#282044"
+orange = "#24152f"
+cream = "#fff1dc"
+
+[os]
+disabled = false
+style = "bg:orange fg:ink"
+format = "[ $symbol ]($style)"
+
+[directory]
+style = "bg:yellow fg:ink"
+format = "[  $path ]($style)"
+truncation_length = 3
+truncation_symbol = "…/"
+
+[git_branch]
+symbol = ""
+format = "[[ $symbol $branch ](fg:cream bg:magenta)](bg:magenta)"
+
+[git_status]
+format = "[[ $all_status$ahead_behind ](fg:cream bg:magenta)](bg:magenta)"
+
+[nodejs]
+symbol = "(nd)"
+format = "[[ $symbol $version ](fg:cream bg:violet)](bg:violet)"
+
+[rust]
+symbol = ""
+format = "[[ $symbol $version ](fg:cream bg:violet)](bg:violet)"
+
+[python]
+symbol = ""
+format = "[[ $symbol $version ](fg:cream bg:violet)](bg:violet)"
+
+[time]
+disabled = true
+time_format = "%H:%M"
+format = "[[  $time ](fg:cream bg:dark)](bg:dark)"
+
+[character]
+success_symbol = "[➜](bold fg:yellow)"
+error_symbol = "[➜](bold fg:orange)"
