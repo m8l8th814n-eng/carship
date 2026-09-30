@@ -34,7 +34,6 @@ EMOJI = "/usr/share/fonts/noto/NotoColorEmoji.ttf"
 
 SIZE = 28
 COLS = 80
-ROWS = 3
 PAD_X, PAD_Y = 24, 20
 BG = (30, 30, 46)
 FG = (205, 214, 244)
@@ -154,14 +153,13 @@ def layout(text):
     return rows
 
 
-def render(left, right, fonts, path):
+def render(left, right, height, fonts, path):
     rows = layout(left)
     rrow = layout(right)[0] if right else []
     rw = sum(width(c[0]) for c in rrow)
     last = sum(width(c[0]) for c in rows[-1])
-    # Every image gets the same canvas, so they line up in a README.
     img = Image.new("RGB", (PAD_X * 2 + COLS * fonts.cw,
-                            PAD_Y * 2 + ROWS * fonts.ch), BG)
+                            PAD_Y * 2 + height * fonts.ch), BG)
     draw = ImageDraw.Draw(img)
 
     def cells(row, x0, y):
@@ -214,6 +212,7 @@ def main():
         cfg = os.path.join(tmp, "preset.toml")
         env = dict(os.environ, CARSHIP_CONFIG=cfg, PWD=root, COLUMNS=str(COLS))
         env.pop("CARSHIP_SHELL", None)
+        shots = []
         for name in names:
             with open(cfg, "w") as f:
                 f.write(subprocess.run([binary, "preset", name], capture_output=True,
@@ -223,10 +222,13 @@ def main():
             right = subprocess.run(args + ["--right"], cwd=root, env=env,
                                    capture_output=True, text=True).stdout
             # The newline add_newline puts above the prompt is just blank space here.
-            left = left.lstrip("\n")
-            render(left, right.strip("\n"), fonts, os.path.join(outdir, name + ".png"))
-            print(name)
+            shots.append((name, left.lstrip("\n"), right.strip("\n")))
 
+    # Every image is as tall as the tallest prompt, so they line up in a README.
+    height = max(len(layout(left)) for _, left, _ in shots)
+    for name, left, right in shots:
+        render(left, right, height, fonts, os.path.join(outdir, name + ".png"))
+        print(name)
 
 if __name__ == "__main__":
     main()

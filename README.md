@@ -261,6 +261,27 @@ nothing.
 
 MIT. See [LICENSE](LICENSE).
 
+##### Screenshots
+
+![](./1.png)
+
+![](./2.png)
+
+![](./3.png)
+
+![](./4.png)
+
+![](./5.png)
+
+![](./6.png)
+
+![](./7.png)
+
+![](./8.png)
+
+![](./9.png)
+
+![](./10.png)
 
 ### Inspired by 
 #### starship.rs
@@ -294,6 +315,18 @@ MIT. See [LICENSE](LICENSE).
 `cobalt`
 
 ![cobalt](./screenshots/cobalt.png)
+
+`codex`
+
+![codex](./screenshots/codex.png)
+
+`codex-maximal`
+
+![codex-maximal](./screenshots/codex-maximal.png)
+
+`codex-minimal`
+
+![codex-minimal](./screenshots/codex-minimal.png)
 
 `cute`
 
