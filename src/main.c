@@ -4,7 +4,7 @@
 #include <string.h>
 #include <sys/time.h>
 
-#define CARSHIP_VERSION "0.1.0"
+#define CARSHIP_VERSION "0.2.0"
 
 static const char usage_text[] =
 	"carship " CARSHIP_VERSION " - a fast cross-shell prompt\n"
