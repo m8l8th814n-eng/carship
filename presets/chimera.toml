@@ -1,0 +1,70 @@
+# Cool mint and arctic blue, with a compact Nerd Font prompt.
+format = """
+$character[](mint)\
+$os[](fg:mint bg:ice)\
+$directory[](fg:ice bg:green)\
+$git_branch$git_status[](fg:green bg:deep)\
+$docker_context$kubernetes[](fg:deep bg:slate)\
+[](fg:slate)\
+$hostname$character"""
+
+palette = "synthwave"
+
+[palettes.synthwave]
+mint = "#ff7043"
+ice = "#ff0032"
+green = "#ff4fa3"
+deep = "#9b5de5"
+slate = "#282044"
+ink = "#24152f"
+white = "#fff1dc"
+
+[palettes.aurora]
+mint = "#014711"
+ice = "#4be9fd"
+green = "#00fa7b"
+deep = "#253b4a"
+slate = "#04495e"
+ink = "#04212b"
+white = "#f1f8ff"
+
+[os]
+disabled = false
+style = "bg:mint fg:ink"
+format = "[ $symbol ]($style)"
+
+[username]
+show_always = true
+style_user = "bg:mint fg:ink"
+style_root = "bg:mint fg:ink"
+format = "[  $user ]($style)"
+
+[directory]
+style = "bg:ice fg:ink"
+format = "[  $path ]($style)"
+truncation_length = 3
+truncation_symbol = "…/"
+
+[git_branch]
+symbol = ""
+format = "[[ $symbol $branch ](fg:ink bg:green)](bg:green)"
+
+[git_status]
+format = "[[ $all_status$ahead_behind ](fg:ink bg:green)](bg:green)"
+
+[docker_context]
+symbol = ""
+format = "[[ $symbol $context ](fg:white bg:deep)](bg:deep)"
+
+[kubernetes]
+symbol = "󱃾"
+format = "[[ $symbol $context ](fg:white bg:deep)](bg:deep)"
+
+[time]
+disabled = false
+time_format = "%R"
+format = "[[ $time ](fg:white bg:slate)](bg:slate)"
+
+[character]
+success_symbol = "[ ● ](bold fg:mint)"
+error_symbol = "[ ● ](bold fg:#0f6e6e)"
