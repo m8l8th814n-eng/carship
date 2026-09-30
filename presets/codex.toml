@@ -1,0 +1,61 @@
+# Codex: compact context on the left, useful execution details on the right.
+format = "$directory$git_branch$git_status\n$character"
+right_format = "$status$cmd_duration$time"
+
+palette = "codex"
+
+[palettes.codex]
+green = "#73c9b2"
+mint = "#91bdf2"
+white = "#edf2f7"
+grey = "#a3afbd"
+dim = "#738092"
+amber = "#e4bb78"
+red = "#e78383"
+
+[directory]
+style = "white"
+format = "[$path]($style)[$read_only]($read_only_style)"
+truncation_length = 3
+truncation_symbol = "…/"
+read_only = " "
+read_only_style = "red"
+
+[git_branch]
+symbol = " · "
+style = "mint"
+format = "[$symbol$branch]($style)"
+
+[git_status]
+style = "amber"
+format = " [ $all_status$ahead_behind]($style)"
+conflicted = "~"
+ahead = "⇡${count}"
+behind = "⇣${count}"
+diverged = "⇕"
+untracked = "?${count}"
+modified = "!${count}"
+staged = "+${count}"
+deleted = "-${count}"
+
+[status]
+disabled = false
+style = "red"
+format = "[exit:$status]($style) "
+
+[cmd_duration]
+min_time = 2000
+style = "dim"
+format = "[󱎫 $duration]($style) "
+
+[time]
+disabled = false
+time_format = "%H:%M"
+style = "dim"
+format = "[$time]($style) "
+
+[character]
+success_symbol = "[❯](bold green)"
+error_symbol = "[❯](bold red)"
+vimcmd_symbol = "[❮](bold mint)"
+format = "$symbol "

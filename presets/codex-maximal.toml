@@ -1,0 +1,203 @@
+# Codex Maximal: rich context arranged in a compact, two-line layout.
+format = """
+$os$username$hostname$shlvl$sudo$directory$container$nix_shell$shell
+$git_branch$git_state$git_status$git_metrics$env_var
+$c$cpp$elixir$elm$golang$gradle$haskell$java$julia$kotlin$maven$nim$nodejs$php$python$rust$scala$bun$conda$pixi$docker_context
+$jobs$status$cmd_duration$time$localip$tty$animation
+$character"""
+
+palette = "codex_maximal"
+add_newline = true
+
+[palettes.codex_maximal]
+green = "#73c9b2"
+mint = "#91bdf2"
+white = "#edf2f7"
+grey = "#a3afbd"
+dim = "#738092"
+amber = "#e4bb78"
+red = "#e78383"
+blue = "#82b8e8"
+violet = "#b6a4df"
+slate = "#465466"
+
+[os]
+disabled = false
+style = "green"
+format = "[$symbol ]($style)"
+
+[username]
+show_always = true
+style_user = "green"
+style_root = "red"
+format = "[$user@]($style)"
+
+[hostname]
+ssh_only = false
+style = "grey"
+format = "[$hostname ]($style)"
+
+[shlvl]
+disabled = false
+style = "violet"
+format = "[↕$shlvl ]($style)"
+
+[sudo]
+disabled = false
+style = "red"
+format = "[sudo ]($style)"
+
+[directory]
+style = "white"
+format = "[  $path]($style)[$read_only]($read_only_style) "
+truncation_length = 4
+truncation_symbol = "…/"
+read_only = " "
+read_only_style = "red"
+
+[container]
+style = "amber"
+format = "[⬡ $name ]($style)"
+
+[nix_shell]
+style = "blue"
+format = "[nix:$state( $name) ]($style)"
+
+[shell]
+disabled = false
+style = "dim"
+format = "[$indicator ]($style)"
+
+[git_branch]
+symbol = "󰘬 "
+style = "mint"
+format = "[$symbol$branch ]($style)"
+
+[git_state]
+style = "violet"
+format = "[($state $progress_current/$progress_total) ]($style)"
+
+[git_status]
+style = "amber"
+format = "[$all_status$ahead_behind ]($style)"
+conflicted = "~"
+ahead = "⇡${count}"
+behind = "⇣${count}"
+diverged = "⇕"
+untracked = "?${count}"
+modified = "!${count}"
+staged = "+${count}"
+deleted = "-${count}"
+
+[git_metrics]
+disabled = false
+added_style = "green"
+deleted_style = "red"
+format = "([+$added]($added_style))([-$deleted]($deleted_style)) "
+
+[env_var]
+variable = "EDITOR"
+symbol = "edit: "
+style = "blue"
+format = "[$symbol$env_value ]($style)"
+
+[c]
+style = "grey"
+format = "[$symbol$version ]($style)"
+[cpp]
+style = "grey"
+format = "[$symbol$version ]($style)"
+[elixir]
+style = "grey"
+format = "[$symbol$version ]($style)"
+[elm]
+style = "grey"
+format = "[$symbol$version ]($style)"
+[golang]
+style = "grey"
+format = "[$symbol$version ]($style)"
+[gradle]
+style = "grey"
+format = "[$symbol$version ]($style)"
+[haskell]
+style = "grey"
+format = "[$symbol$version ]($style)"
+[java]
+style = "grey"
+format = "[$symbol$version ]($style)"
+[julia]
+style = "grey"
+format = "[$symbol$version ]($style)"
+[kotlin]
+style = "grey"
+format = "[$symbol$version ]($style)"
+[maven]
+style = "grey"
+format = "[$symbol$version ]($style)"
+[nim]
+style = "grey"
+format = "[$symbol$version ]($style)"
+[nodejs]
+style = "grey"
+format = "[$symbol$version ]($style)"
+[php]
+style = "grey"
+format = "[$symbol$version ]($style)"
+[python]
+style = "grey"
+format = "[$symbol$version( $virtualenv) ]($style)"
+[rust]
+style = "grey"
+format = "[$symbol$version ]($style)"
+[scala]
+style = "grey"
+format = "[$symbol$version ]($style)"
+[bun]
+style = "grey"
+format = "[$symbol$version ]($style)"
+[conda]
+style = "blue"
+format = "[$symbol$environment ]($style)"
+[pixi]
+style = "blue"
+format = "[$symbol$environment ]($style)"
+[docker_context]
+style = "blue"
+format = "[$symbol$context ]($style)"
+
+[jobs]
+style = "violet"
+format = "[$symbol$number ]($style)"
+[status]
+disabled = false
+style = "red"
+format = "[exit:$status ]($style)"
+[cmd_duration]
+min_time = 1500
+style = "dim"
+format = "[󱎫 $duration ]($style)"
+[time]
+disabled = false
+time_format = "%H:%M:%S"
+style = "dim"
+format = "[$time ]($style)"
+[localip]
+disabled = false
+ssh_only = true
+style = "dim"
+format = "[$localipv4 ]($style)"
+[tty]
+disabled = false
+style = "dim"
+format = "[tty:$tty ]($style)"
+[animation]
+disabled = false
+interval = 900
+frames = ["·", "•", "●", "•"]
+styles = ["fg:green", "fg:mint", "fg:green", "fg:mint"]
+
+[character]
+success_symbol = "[❯](bold green)"
+error_symbol = "[❯](bold red)"
+vimcmd_symbol = "[❮](bold mint)"
+format = "$symbol "

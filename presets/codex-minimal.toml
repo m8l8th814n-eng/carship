@@ -1,0 +1,31 @@
+# Codex Minimal: directory, git context, and a clean input marker.
+format = "$directory$git_branch$git_status\n$character"
+palette = "codex_minimal"
+
+[palettes.codex_minimal]
+green = "#73c9b2"
+white = "#edf2f7"
+grey = "#8795a5"
+amber = "#e4bb78"
+red = "#e78383"
+
+[directory]
+style = "white"
+format = "[$path]($style) "
+truncation_length = 3
+truncation_symbol = "…/"
+
+[git_branch]
+symbol = " · "
+style = "grey"
+format = "[$symbol$branch]($style)"
+
+[git_status]
+style = "amber"
+format = "[ $all_status$ahead_behind]($style)"
+
+[character]
+success_symbol = "[›](bold green)"
+error_symbol = "[›](bold red)"
+vimcmd_symbol = "[‹](bold green)"
+format = "$symbol "
