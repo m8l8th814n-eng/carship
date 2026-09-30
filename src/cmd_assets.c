@@ -118,7 +118,18 @@ int cmd_init(int argc, char **argv, const char *argv0)
 	free(text);
 
 	/* RPROMPT costs a whole extra process on every prompt, so only wire it up
-	 * when the configuration actually defines a right_format. */
+	 * when the configuration actually defines a right_format.
+	 *
+	 * It is a plain string rather than a live '$(...)' on purpose. zsh
+	 * re-expands both prompts on every redisplay, and the line editor
+	 * redisplays from inside widgets: zle-line-finish, keymap changes, and
+	 * whatever zsh-syntax-highlighting and friends hook onto them. Forking a
+	 * command substitution there is what produces
+	 *
+	 *     azhw:zle-line-finish:9: job table full or recursion limit exceeded
+	 *
+	 * so the right prompt is rendered once per prompt in precmd instead. The
+	 * cost is that an animated right_format only advances between commands. */
 	if (strcmp(shell, "zsh") == 0) {
 		config cfg;
 		char err[256] = {0};
@@ -126,10 +137,13 @@ int cmd_init(int argc, char **argv, const char *argv0)
 		const char *right = toml_str_at(cfg.root, "right_format", NULL);
 
 		if (right && *right)
-			printf("\nRPROMPT='$(\"%s\" prompt --shell=zsh --right"
+			printf("\ncarship_rprompt() {\n"
+			       "\tRPROMPT=$(\"%s\" prompt --shell=zsh --right"
 			       " --terminal-width=\"$COLUMNS\" --status=\"$CARSHIP_STATUS\""
 			       " --jobs=\"$CARSHIP_JOBS\" --keymap=\"$CARSHIP_KEYMAP\""
-			       " --cmd-duration=\"$CARSHIP_DURATION\")'\n",
+			       " --cmd-duration=\"$CARSHIP_DURATION\")\n"
+			       "}\n"
+			       "add-zsh-hook precmd carship_rprompt\n",
 			       self);
 		config_free(&cfg);
 	}
@@ -191,6 +205,54 @@ static void list_presets(void)
 	}
 }
 
+/* "preset set" copies a preset over verbatim, so the active one can be named
+ * again by comparing the configuration against every embedded preset. */
+static char *match_preset(const char *text, size_t len)
+{
+	for (size_t i = 0; i < carship_assets_count; i++) {
+		const struct asset *a = &carship_assets[i];
+
+		if (!has_prefix(a->name, "presets/"))
+			continue;
+		if (a->len != len || memcmp(a->data, text, len) != 0)
+			continue;
+
+		const char *base = a->name + 8;
+		size_t n = strlen(base);
+		if (n > 5)
+			return xstrndup(base, n - 5);
+	}
+	return NULL;
+}
+
+static int print_current_preset(void)
+{
+	char *path = config_default_path();
+	size_t len = 0;
+	char *text = read_file(path, &len);
+
+	if (!text) {
+		fprintf(stderr, "carship preset: no configuration at %s\n", path);
+		free(path);
+		return 1;
+	}
+
+	char *name = match_preset(text, len);
+	if (name)
+		printf("%s\n", name);
+	else
+		fprintf(stderr,
+		        "carship preset: %s does not match any preset, so it is either "
+		        "hand-written or an edited copy\n",
+		        path);
+
+	int rc = name ? 0 : 1;
+	free(name);
+	free(text);
+	free(path);
+	return rc;
+}
+
 /* Keeps one copy of whatever the config file held, so that "preset set" is
  * recoverable. */
 static bool backup_config(const char *path)
@@ -227,6 +289,10 @@ int cmd_preset(int argc, char **argv, const char *argv0)
 			list_presets();
 			return 0;
 		}
+		if (strcmp(argv[i], "--current") == 0 || strcmp(argv[i], "-c") == 0) {
+			free(config_path);
+			return print_current_preset();
+		}
 		if (strcmp(argv[i], "set") == 0 && !name && !config_path) {
 			config_path = config_default_path();
 			output = config_path;
@@ -246,6 +312,7 @@ int cmd_preset(int argc, char **argv, const char *argv0)
 		fputs("carship preset: missing preset name\n"
 		      "usage: carship preset <name> [-o <file>]\n"
 		      "       carship preset set <name>      write it to the config file\n"
+		      "       carship preset --current       name the active preset\n"
 		      "       carship preset --list\n",
 		      stderr);
 		free(config_path);

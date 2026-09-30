@@ -29,11 +29,11 @@ _carship() {
 			COMPREPLY=($(compgen -f -- "$cur"))
 		elif [[ $COMP_CWORD -eq 2 ]]; then
 			presets="$("$self" preset --list 2>/dev/null)"
-			COMPREPLY=($(compgen -W "$presets set --list" -- "$cur"))
+			COMPREPLY=($(compgen -W "$presets set --list --current" -- "$cur"))
 		elif [[ "${COMP_WORDS[2]}" == "set" && $COMP_CWORD -eq 3 ]]; then
 			COMPREPLY=($(compgen -W "$("$self" preset --list 2>/dev/null)" -- "$cur"))
 		else
-			COMPREPLY=($(compgen -W "--list --output" -- "$cur"))
+			COMPREPLY=($(compgen -W "--list --current --output" -- "$cur"))
 		fi
 		;;
 	module)

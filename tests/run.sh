@@ -176,6 +176,69 @@ _cs_probe() { print -r -- \"\${_comps[carship]:-NONE}\" > $work/pty/result }" \
 		status=1
 	fi
 
+	# The right prompt is rendered once per prompt into a plain RPROMPT. A live
+	# command substitution there re-forks on every redisplay, including the ones
+	# zle-line-finish hooks trigger, where zsh answers with "job table full or
+	# recursion limit exceeded".
+	printf 'right_format = "$directory"\n' >"$work/right.toml"
+	got=$(CARSHIP_CONFIG="$work/right.toml" "$bin" init zsh --print-full-init |
+		grep -n 'RPROMPT' || true)
+	case $got in
+	*'RPROMPT=$('*) printf 'ok   right prompt is assigned, not substituted\n' ;;
+	*)
+		printf 'FAIL right prompt wiring\n  got [%s]\n' "$got"
+		status=1
+		;;
+	esac
+	case $got in
+	*"RPROMPT='\$("*)
+		printf 'FAIL RPROMPT still holds a live command substitution\n  got [%s]\n' "$got"
+		status=1
+		;;
+	esac
+
+	# carship must leave the special zle widgets to the hook dispatcher. Owning
+	# them means the next plugin to wrap one captures carship's widget, and the
+	# chain then runs back into carship until zsh gives up with "job table full
+	# or recursion limit exceeded". Only a real terminal has a line editor to
+	# register hooks with, hence script(1).
+	if command -v zsh >/dev/null && command -v script >/dev/null; then
+		mkdir -p "$work/zle"
+		printf '%s\n' "zmodload -i zsh/zle
+autoload -Uz add-zle-hook-widget
+_cs_other() { }
+add-zle-hook-widget zle-line-finish _cs_other
+eval \"\$($bin init zsh)\"
+_cs_probe() {
+	print -r -- \"W=\${widgets[zle-line-finish]} H=\$(zstyle -L zle-line-finish widgets)\" \
+		>$work/zle/result
+}
+precmd_functions+=(_cs_probe)" >"$work/zle/.zshrc"
+		printf 'exit\n' >"$work/zle/in"
+		rm -f "$work/zle/result"
+		ZDOTDIR="$work/zle" script -qec "zsh -i" /dev/null \
+			<"$work/zle/in" >/dev/null 2>&1 || true
+		got=$(cat "$work/zle/result" 2>/dev/null || true)
+
+		case $got in
+		*"W=user:azhw:zle-line-finish"*)
+			case $got in
+			*carship_line_finish*_cs_other* | *_cs_other*carship_line_finish*)
+				printf 'ok   zle hooks are registered, not stolen\n'
+				;;
+			*)
+				printf 'FAIL zle hook list lost a widget\n  got [%s]\n' "$got"
+				status=1
+				;;
+			esac
+			;;
+		*)
+			printf 'FAIL carship took over zle-line-finish\n  got [%s]\n' "$got"
+			status=1
+			;;
+		esac
+	fi
+
 	# An absent right_format must not report a parse error or print a fallback,
 	# since zsh would run this on every prompt.
 	err=$(CARSHIP_CONFIG="$work/set.toml" "$bin" prompt --shell=zsh --right 2>&1 >/dev/null)

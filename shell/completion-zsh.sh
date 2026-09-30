@@ -42,6 +42,7 @@ _carship() {
 				_arguments \
 					"1:preset:(set \$($self preset --list 2>/dev/null))" \
 					'--list[List available presets]' \
+					'--current[Name the active preset]' \
 					'(-o --output)'{-o,--output}'[Write to a file]:file:_files'
 			fi
 			;;
